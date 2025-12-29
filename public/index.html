@@ -262,7 +262,28 @@
 
         doc.setData(buildData());
 
-        doc.render();
+      try {
+  doc.render();
+} catch (e) {
+  // This prints a detailed list of what tags failed and why
+  console.error("DOCXTEMPLATER ERROR:", e);
+  if (e.properties && e.properties.errors) {
+    console.error(
+      "DETAILS:",
+      e.properties.errors.map(err => err.properties && err.properties.explanation)
+    );
+    alert(
+      "Template error(s):\n\n" +
+      e.properties.errors
+        .map(err => (err.properties && err.properties.explanation) || err.message)
+        .join("\n\n")
+    );
+  } else {
+    alert(e.message || "Unknown template error");
+  }
+  throw e;
+}
+
 
 
 
