@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!doctype html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="utf-8" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width,initial-scale=1" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Promotion T&amp;C Generator&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>body { font-family: system-ui, Arial; padding: 24px; max-width: 900px; margin: 0 auto; }</p>
+<p class="p1"><span class="Apple-converted-space">      </span>label { display: block; margin-top: 12px; font-weight: 600; }</p>
+<p class="p1"><span class="Apple-converted-space">      </span>input, textarea { width: 100%; padding: 10px; margin-top: 6px; }</p>
+<p class="p1"><span class="Apple-converted-space">      </span>.row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }</p>
+<p class="p1"><span class="Apple-converted-space">      </span>.actions { display: flex; gap: 12px; margin-top: 18px; flex-wrap: wrap; }</p>
+<p class="p1"><span class="Apple-converted-space">      </span>button { padding: 10px 14px; cursor: pointer; }</p>
+<p class="p1"><span class="Apple-converted-space">      </span>small { color: #555; display:block; margin-top: 6px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h1&gt;Promotion T&amp;C Generator&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;small&gt;Fills the Word template and downloads a .docx. (PDF conversion can be added later.)&lt;/small&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="row"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;Name of Promotion&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input id="promotion_name" required /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;Time Zone&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input id="time_zone" placeholder="ET / CT / GMT / CET" required /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="row"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;Start Date&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input id="start_date" placeholder="January 10, 2026" required /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;End Date&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input id="end_date" placeholder="January 20, 2026" required /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="row"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;URL&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input id="url" placeholder="https://..." required /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;Drawing Date&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input id="drawing_date" placeholder="January 25, 2026" required /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="row"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;Prize Quantity&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input id="prize_quantity" type="number" min="1" required /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;ARV&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input id="arv" placeholder="$250" required /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="row"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;Prize Name&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input id="prize_name" required /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;Contact Email&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input id="contact_email" type="email" required /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;label&gt;Prize Description&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;textarea id="prize_description" rows="3" required&gt;&lt;/textarea&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;label&gt;Output file name (optional)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;input id="filename" placeholder="2026_TM_Giveaway_Terms" /&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="actions"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button id="btnDocx"&gt;Download DOCX&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Libraries --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.7/dist/pizzip.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/docxtemplater@3.46.0/build/docxtemplater.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"&gt;&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const TEMPLATE_URL = "/templates/TM_Game_of_Chance_Terms_Template_2026_docxtemplater.docx";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>function val(id) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return (document.getElementById(id).value || "").trim();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>function outputBaseName() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const name = val("filename");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (name) return name;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const promo = val("promotion_name") || "Promotion_Terms";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return promo.replace(/[^\w]+/g, "_");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>function buildData() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>promotion_name: val("promotion_name"),</p>
+<p class="p1"><span class="Apple-converted-space">          </span>start_date: val("start_date"),</p>
+<p class="p1"><span class="Apple-converted-space">          </span>end_date: val("end_date"),</p>
+<p class="p1"><span class="Apple-converted-space">          </span>time_zone: val("time_zone"),</p>
+<p class="p1"><span class="Apple-converted-space">          </span>url: val("url"),</p>
+<p class="p1"><span class="Apple-converted-space">          </span>drawing_date: val("drawing_date"),</p>
+<p class="p1"><span class="Apple-converted-space">          </span>prize_quantity: val("prize_quantity"),</p>
+<p class="p1"><span class="Apple-converted-space">          </span>prize_name: val("prize_name"),</p>
+<p class="p1"><span class="Apple-converted-space">          </span>prize_description: val("prize_description"),</p>
+<p class="p1"><span class="Apple-converted-space">          </span>arv: val("arv"),</p>
+<p class="p1"><span class="Apple-converted-space">          </span>contact_email: val("contact_email"),</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>async function fetchTemplateArrayBuffer() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const res = await fetch(TEMPLATE_URL);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (!res.ok) throw new Error(`Template fetch failed: ${res.status}`);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return await res.arrayBuffer();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>async function generateDocxBlob() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const content = await fetchTemplateArrayBuffer();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const zip = new PizZip(content);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const doc = new window.docxtemplater(zip, { paragraphLoop: true, linebreaks: true });</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>doc.setData(buildData());</p>
+<p class="p1"><span class="Apple-converted-space">        </span>doc.render();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>return doc.getZip().generate({</p>
+<p class="p1"><span class="Apple-converted-space">          </span>type: "blob",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById("btnDocx").addEventListener("click", async () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const blob = await generateDocxBlob();</p>
+<p class="p1"><span class="Apple-converted-space">          </span>saveAs(blob, `${outputBaseName()}.docx`);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} catch (err) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>alert(err.message || String(err));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
