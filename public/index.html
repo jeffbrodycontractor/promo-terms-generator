@@ -2,87 +2,217 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Promotion T&C Generator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Promotion T&C Generator</title>
 
     <style>
-      body {
-        font-family: system-ui, Arial, sans-serif;
-        padding: 24px;
-        max-width: 900px;
-        margin: 0 auto;
-      }
-
-      h1 {
-        margin-bottom: 8px;
-      }
-
-      label {
-        display: block;
-        margin-top: 14px;
-        font-weight: 600;
-      }
-
-      input,
-      textarea {
-        width: 100%;
-        padding: 10px;
-        margin-top: 6px;
-        font-size: 14px;
-      }
-
-      textarea {
-        resize: vertical;
-      }
-
-      .row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-      }
-
-      .actions {
-        margin-top: 24px;
-      }
-
-      button {
-        padding: 12px 16px;
-        font-size: 15px;
-        cursor: pointer;
-      }
+      body { font-family: system-ui, Arial, sans-serif; padding: 24px; max-width: 920px; margin: 0 auto; }
+      h1 { margin: 0 0 8px 0; }
+      .note { color: #555; margin-bottom: 18px; }
+      label { display: block; margin-top: 14px; font-weight: 600; }
+      input, textarea { width: 100%; padding: 10px; margin-top: 6px; font-size: 14px; box-sizing: border-box; }
+      textarea { resize: vertical; }
+      .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      .actions { margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+      button { padding: 12px 16px; font-size: 15px; cursor: pointer; }
+      .status { margin-top: 14px; padding: 12px; border: 1px solid #ddd; background: #fafafa; white-space: pre-wrap; display: none; }
+      .status.show { display: block; }
     </style>
   </head>
 
   <body>
     <h1>Promotion T&amp;C Generator</h1>
+    <div class="note">Fill out the fields, then click Download DOCX.</div>
 
     <div class="row">
       <div>
-        <label>Name of Promotion</label>
+        <label for="promotion_name">Name of Promotion</label>
         <input id="promotion_name" />
       </div>
       <div>
-        <label>Time Zone</label>
+        <label for="time_zone">Time Zone</label>
         <input id="time_zone" placeholder="ET / CT / GMT" />
       </div>
     </div>
 
     <div class="row">
       <div>
-        <label>Start Date</label>
+        <label for="start_date">Start Date</label>
         <input id="start_date" placeholder="January 1, 2026" />
       </div>
       <div>
-        <label>End Date</label>
+        <label for="end_date">End Date</label>
         <input id="end_date" placeholder="January 31, 2026" />
       </div>
     </div>
 
     <div class="row">
       <div>
-        <label>URL</label>
+        <label for="url">URL</label>
         <input id="url" placeholder="https://example.com" />
       </div>
       <div>
-        <label>Drawing Date</label>
-        <input id="drawing_date" placeholder="February_
+        <label for="drawing_date">Drawing Date</label>
+        <input id="drawing_date" placeholder="February 5, 2026" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label for="prize_quantity">Prize Quantity</label>
+        <input id="prize_quantity" placeholder="1" />
+      </div>
+      <div>
+        <label for="arv">ARV</label>
+        <input id="arv" placeholder="$500" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label for="prize_name">Prize Name</label>
+        <input id="prize_name" />
+      </div>
+      <div>
+        <label for="contact_email">Contact Email</label>
+        <input id="contact_email" type="email" placeholder="name@company.com" />
+      </div>
+    </div>
+
+    <label for="prize_description">Prize Description</label>
+    <textarea id="prize_description" rows="3"></textarea>
+
+    <label for="filename">Output file name (optional)</label>
+    <input id="filename" placeholder="2026_Promotion_Terms" />
+
+    <div class="actions">
+      <button id="btnDocx" type="button">Download DOCX</button>
+      <button id="btnTest" type="button">Test Template Fetch</button>
+    </div>
+
+    <div id="status" class="status"></div>
+
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.7/dist/pizzip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docxtemplater@3.46.0/build/docxtemplater.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
+    <script>
+      // IMPORTANT: Make sure this filename matches what you uploaded to public/templates/ on GitHub
+      const TEMPLATE_URL = "/templates/TM_Game_of_Chance_Terms_Template_2026_docxtemplater.docx";
+
+      const statusEl = document.getElementById("status");
+      function showStatus(msg) {
+        statusEl.textContent = msg;
+        statusEl.classList.add("show");
+      }
+      function clearStatus() {
+        statusEl.textContent = "";
+        statusEl.classList.remove("show");
+      }
+
+      function val(id) {
+        return (document.getElementById(id).value || "").trim();
+      }
+      function safe(v) {
+        return (v ?? "").toString().trim();
+      }
+      function outputBaseName() {
+        const name = val("filename");
+        if (name) return name;
+        const promo = val("promotion_name") || "Promotion_Terms";
+        return promo.replace(/[^\w]+/g, "_");
+      }
+
+      function buildData() {
+        return {
+          promotion_name: safe(val("promotion_name")),
+          start_date: safe(val("start_date")),
+          end_date: safe(val("end_date")),
+          time_zone: safe(val("time_zone")),
+          url: safe(val("url")),
+          drawing_date: safe(val("drawing_date")),
+          prize_quantity: safe(val("prize_quantity")),
+          prize_name: safe(val("prize_name")),
+          prize_description: safe(val("prize_description")),
+          arv: safe(val("arv")),
+          contact_email: safe(val("contact_email")),
+        };
+      }
+
+      async function generateDocxBlob() {
+        const res = await fetch(TEMPLATE_URL, { cache: "no-store" });
+
+        if (!res.ok) {
+          throw new Error(`Template fetch failed: HTTP ${res.status}`);
+        }
+
+        // This helps catch the classic issue where the template URL returns HTML instead of DOCX
+        const ct = (res.headers.get("content-type") || "").toLowerCase();
+        if (!ct.includes("officedocument") && !ct.includes("application/zip")) {
+          const preview = await res.text();
+          throw new Error(
+            "Template is not being served as a DOCX.\n" +
+            `content-type was: ${ct}\n\n` +
+            "First 200 chars of response:\n" + preview.slice(0, 200)
+          );
+        }
+
+        const content = await res.arrayBuffer();
+        const zip = new PizZip(content);
+
+        const doc = new window.docxtemplater(zip, {
+          paragraphLoop: true,
+          linebreaks: true,
+          nullGetter: () => "",
+        });
+
+        doc.setData(buildData());
+
+        try {
+          doc.render();
+        } catch (e) {
+          const errs = e && e.properties && e.properties.errors ? e.properties.errors : [];
+          if (errs.length) {
+            const details = errs
+              .map((er, i) => {
+                const exp = (er.properties && er.properties.explanation) ? er.properties.explanation : (er.message || String(er));
+                return `${i + 1}) ${exp}`;
+              })
+              .join("\n\n");
+            throw new Error("Template error(s):\n\n" + details);
+          }
+          throw new Error(e.message || String(e));
+        }
+
+        return doc.getZip().generate({
+          type: "blob",
+          mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        });
+      }
+
+      document.getElementById("btnTest").addEventListener("click", async () => {
+        clearStatus();
+        try {
+          const res = await fetch(TEMPLATE_URL, { cache: "no-store" });
+          const ct = res.headers.get("content-type") || "(none)";
+          showStatus(`Template fetch:\nHTTP ${res.status}\ncontent-type: ${ct}\nURL: ${TEMPLATE_URL}`);
+        } catch (err) {
+          showStatus("Template fetch failed:\n" + (err.message || String(err)));
+        }
+      });
+
+      document.getElementById("btnDocx").addEventListener("click", async () => {
+        clearStatus();
+        try {
+          showStatus("Generating DOCX...");
+          const blob = await generateDocxBlob();
+          saveAs(blob, `${outputBaseName()}.docx`);
+          showStatus("DOCX generated and downloaded.");
+        } catch (err) {
+          showStatus(err.message || String(err));
+        }
+      });
+    </script>
+  </body>
+</html>
