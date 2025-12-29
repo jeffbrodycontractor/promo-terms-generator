@@ -251,38 +251,61 @@
 
 
       async function generateDocxBlob() {
+  const res = await fetch(TEMPLATE_URL);
 
-        const content = await fetchTemplateArrayBuffer();
-
-        const zip = new PizZip(content);
-
-        const doc = new window.docxtemplater(zip, { paragraphLoop: true, linebreaks: true });
-
-
-
-        doc.setData(buildData());
-
-      try {
-  doc.render();
-} catch (e) {
-  // This prints a detailed list of what tags failed and why
-  console.error("DOCXTEMPLATER ERROR:", e);
-  if (e.properties && e.properties.errors) {
-    console.error(
-      "DETAILS:",
-      e.properties.errors.map(err => err.properties && err.properties.explanation)
-    );
-    alert(
-      "Template error(s):\n\n" +
-      e.properties.errors
-        .map(err => (err.properties && err.properties.explanation) || err.message)
-        .join("\n\n")
-    );
-  } else {
-    alert(e.message || "Unknown template error");
+  if (!res.ok) {
+    throw new Error(`Template fetch failed: ${res.status}`);
   }
-  throw e;
+
+  // Quick sanity check: make sure we are fetching a real .docx
+  const ct = (res.headers.get("content-type") || "").toLowerCase();
+  if (!ct.includes("officedocument") && !ct.includes("application/zip")) {
+    const preview = await res.text();
+    alert("Template is not a real DOCX. First 200 chars:\n\n" + preview.slice(0, 200));
+    throw new Error("Template is not a DOCX");
+  }
+
+  const content = await res.arrayBuffer();
+  const zip = new PizZip(content);
+
+  const doc = new window.docxtemplater(zip, {
+    paragraphLoop: true,
+    linebreaks: true,
+    // This prevents missing tags from crashing. Instead they become blank.
+    nullGetter: () => ""
+  });
+
+  doc.setData(buildData());
+
+  try {
+    doc.render();
+  } catch (e) {
+    // Turn “Multi error” into readable text
+    let msg = "TEMPLATE ERRORS:\n\n";
+
+    const errs = e?.properties?.errors || [];
+    if (errs.length) {
+      msg += errs
+        .map((er, i) => {
+          const exp = er?.properties?.explanation || er?.message || String(er);
+          return `${i + 1}) ${exp}`;
+        })
+        .join("\n\n");
+    } else {
+      msg += e.message || String(e);
+    }
+
+    alert(msg);
+    throw e;
+  }
+
+  return doc.getZip().generate({
+    type: "blob",
+    mimeType:
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  });
 }
+
 
 
 
