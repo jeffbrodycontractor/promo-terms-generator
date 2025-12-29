@@ -1,345 +1,88 @@
 <!doctype html>
-
 <html lang="en">
-
   <head>
-
     <meta charset="utf-8" />
-
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-
     <title>Promotion T&C Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <style>
+      body {
+        font-family: system-ui, Arial, sans-serif;
+        padding: 24px;
+        max-width: 900px;
+        margin: 0 auto;
+      }
 
-      body { font-family: system-ui, Arial; padding: 24px; max-width: 900px; margin: 0 auto; }
+      h1 {
+        margin-bottom: 8px;
+      }
 
-      label { display: block; margin-top: 12px; font-weight: 600; }
+      label {
+        display: block;
+        margin-top: 14px;
+        font-weight: 600;
+      }
 
-      input, textarea { width: 100%; padding: 10px; margin-top: 6px; }
+      input,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 6px;
+        font-size: 14px;
+      }
 
-      .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+      textarea {
+        resize: vertical;
+      }
 
-      .actions { display: flex; gap: 12px; margin-top: 18px; flex-wrap: wrap; }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
 
-      button { padding: 10px 14px; cursor: pointer; }
+      .actions {
+        margin-top: 24px;
+      }
 
-      small { color: #555; display:block; margin-top: 6px; }
-
+      button {
+        padding: 12px 16px;
+        font-size: 15px;
+        cursor: pointer;
+      }
     </style>
-
   </head>
 
   <body>
-
-    <h1>Promotion T&C Generator</h1>
-
-    <small>Fills the Word template and downloads a .docx. (PDF conversion can be added later.)</small>
-
-
+    <h1>Promotion T&amp;C Generator</h1>
 
     <div class="row">
-
       <div>
-
         <label>Name of Promotion</label>
-
-        <input id="promotion_name" required />
-
+        <input id="promotion_name" />
       </div>
-
       <div>
-
         <label>Time Zone</label>
-
-        <input id="time_zone" placeholder="ET / CT / GMT / CET" required />
-
+        <input id="time_zone" placeholder="ET / CT / GMT" />
       </div>
-
     </div>
 
-
-
     <div class="row">
-
       <div>
-
         <label>Start Date</label>
-
-        <input id="start_date" placeholder="January 10, 2026" required />
-
+        <input id="start_date" placeholder="January 1, 2026" />
       </div>
-
       <div>
-
         <label>End Date</label>
-
-        <input id="end_date" placeholder="January 20, 2026" required />
-
+        <input id="end_date" placeholder="January 31, 2026" />
       </div>
-
     </div>
 
-
-
     <div class="row">
-
       <div>
-
         <label>URL</label>
-
-        <input id="url" placeholder="https://..." required />
-
+        <input id="url" placeholder="https://example.com" />
       </div>
-
       <div>
-
         <label>Drawing Date</label>
-
-        <input id="drawing_date" placeholder="January 25, 2026" required />
-
-      </div>
-
-    </div>
-
-
-
-    <div class="row">
-
-      <div>
-
-        <label>Prize Quantity</label>
-
-        <input id="prize_quantity" type="number" min="1" required />
-
-      </div>
-
-      <div>
-
-        <label>ARV</label>
-
-        <input id="arv" placeholder="$250" required />
-
-      </div>
-
-    </div>
-
-
-
-    <div class="row">
-
-      <div>
-
-        <label>Prize Name</label>
-
-        <input id="prize_name" required />
-
-      </div>
-
-      <div>
-
-        <label>Contact Email</label>
-
-        <input id="contact_email" type="email" required />
-
-      </div>
-
-    </div>
-
-
-
-    <label>Prize Description</label>
-
-    <textarea id="prize_description" rows="3" required></textarea>
-
-
-
-    <label>Output file name (optional)</label>
-
-    <input id="filename" placeholder="2026_TM_Giveaway_Terms" />
-
-
-
-    <div class="actions">
-
-      <button id="btnDocx" type="button">Download DOCX</button>
-
-    </div>
-
-
-
-    <!-- Libraries -->
-
-    <script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.7/dist/pizzip.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/docxtemplater@3.46.0/build/docxtemplater.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
-
-
-
-    <script>
-
-      const TEMPLATE_URL = "/templates/TM_Game_of_Chance_Terms_Template_2026_docxtemplater.docx";
-
-
-
-      function val(id) {
-
-        return (document.getElementById(id).value || "").trim();
-
-      }
-
-
-
-      function outputBaseName() {
-
-        const name = val("filename");
-
-        if (name) return name;
-
-        const promo = val("promotion_name") || "Promotion_Terms";
-
-        return promo.replace(/[^\w]+/g, "_");
-
-      }
-
-
-
-      function buildData() {
-
-        return {
-
-          promotion_name: val("promotion_name"),
-
-          start_date: val("start_date"),
-
-          end_date: val("end_date"),
-
-          time_zone: val("time_zone"),
-
-          url: val("url"),
-
-          drawing_date: val("drawing_date"),
-
-          prize_quantity: val("prize_quantity"),
-
-          prize_name: val("prize_name"),
-
-          prize_description: val("prize_description"),
-
-          arv: val("arv"),
-
-          contact_email: val("contact_email"),
-
-        };
-
-      }
-
-
-
-      async function fetchTemplateArrayBuffer() {
-
-        const res = await fetch(TEMPLATE_URL);
-
-        if (!res.ok) throw new Error(`Template fetch failed: ${res.status}`);
-
-        return await res.arrayBuffer();
-
-      }
-
-
-
-      async function generateDocxBlob() {
-  const res = await fetch(TEMPLATE_URL);
-
-  if (!res.ok) {
-    throw new Error(`Template fetch failed: ${res.status}`);
-  }
-
-  // Quick sanity check: make sure we are fetching a real .docx
-  const ct = (res.headers.get("content-type") || "").toLowerCase();
-  if (!ct.includes("officedocument") && !ct.includes("application/zip")) {
-    const preview = await res.text();
-    alert("Template is not a real DOCX. First 200 chars:\n\n" + preview.slice(0, 200));
-    throw new Error("Template is not a DOCX");
-  }
-
-  const content = await res.arrayBuffer();
-  const zip = new PizZip(content);
-
-  const doc = new window.docxtemplater(zip, {
-    paragraphLoop: true,
-    linebreaks: true,
-    // This prevents missing tags from crashing. Instead they become blank.
-    nullGetter: () => ""
-  });
-
-  doc.setData(buildData());
-
-  try {
-    doc.render();
-  } catch (e) {
-    // Turn “Multi error” into readable text
-    let msg = "TEMPLATE ERRORS:\n\n";
-
-    const errs = e?.properties?.errors || [];
-    if (errs.length) {
-      msg += errs
-        .map((er, i) => {
-          const exp = er?.properties?.explanation || er?.message || String(er);
-          return `${i + 1}) ${exp}`;
-        })
-        .join("\n\n");
-    } else {
-      msg += e.message || String(e);
-    }
-
-    alert(msg);
-    throw e;
-  }
-
-  return doc.getZip().generate({
-    type: "blob",
-    mimeType:
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-  });
-}
-
-
-
-
-
-        return doc.getZip().generate({
-
-          type: "blob",
-
-          mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-
-        });
-
-      }
-
-
-
-      document.getElementById("btnDocx").addEventListener("click", async () => {
-
-        try {
-
-          const blob = await generateDocxBlob();
-
-          saveAs(blob, `${outputBaseName()}.docx`);
-
-        } catch (err) {
-
-          alert(err.message || String(err));
-
-        }
-
-      });
-
-    </script>
-
-  </body>
-
-</html>
+        <input id="drawing_date" placeholder="February_
